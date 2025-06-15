@@ -1,6 +1,6 @@
 # Welcome to Edu Resolve - Your Student Community Website
 *This is the Frontend Repository for Edu Resolve Website*
-By I Sai Raghava
+
 
 [Click Here for Front End Repository for Edu Resolve Website](https://github.com/DarshanAguru/eduResolveBE)
 ## About Edu Resolve

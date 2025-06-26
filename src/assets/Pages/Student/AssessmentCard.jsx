@@ -35,7 +35,7 @@ const AssessmentCard = ({ id, token, userId, name, goBack, deadline }) => {
       }, 10000);
       return () => clearTimeout(timer); // Cleanup on component unmount
     }
-  }, [marks]); // Dependency array
+  }, [marks, goBack]); // Dependency array
 
   // Function to handle direct redirect
   const handleDirectRedirect = () => {
@@ -50,7 +50,7 @@ const AssessmentCard = ({ id, token, userId, name, goBack, deadline }) => {
       setQuestions(res.data.questions);
     }
     getAssignmentQuestions();
-  }, []);
+  }, [token, id, userId]);
   const handleOptionChange = (questionIndex, option, isMultiple) => {
     setAnswers((prevAnswers) => {
       const updatedAnswers = [...prevAnswers];

@@ -3,27 +3,26 @@
 /* eslint-disable react/prop-types */
 import  { useState, useEffect } from "react";
 import api from '../api'
-const Modal = ({ isOpen, onClose, user, type, refreshUsers }) => {
+const Modal = ({ isOpen, onClose, user, userType, refreshUsers }) => {
   if (!isOpen) return null;
   const [data, setData] = useState(null);
- 
     useEffect(() => {
-      setData(JSON.parse(localStorage.getItem("user")));
+      setData(JSON.parse(sessionStorage.getItem("user")));
     }, []);
 
   async function acceptData() {
     try {
-      const userType =
-        type === "org"
+      const userTypeInt =
+        userType === "org"
           ? "verifyLocalAdmin"
-          : type === "mentors"
+          : userType === "mentors"
             ? "verifyMentor"
             : "verifyTeacher";
 
       const admin =
-        userType === "verifyTeacher" ? "localAdmins" : "globalAdmins";
+        userTypeInt === "verifyTeacher" ? "localAdmins" : "globalAdmins";
       await api.post(
-        `/${admin}/${userType}/${user._id}`,
+        `/${admin}/${userTypeInt}/${user._id}`,
         { token: data.token, id: data._id }
       );
 
@@ -35,16 +34,16 @@ const Modal = ({ isOpen, onClose, user, type, refreshUsers }) => {
   }
   async function deleteData() {
     try {
-      const userType =
-        type === "org"
+      const userTypeInt =
+        userType === "org"
           ? "rejectLocalAdmin"
-          : type === "mentors"
+          : userType === "mentors"
             ? "rejectMentor"
             : "rejectTeacher";
       const admin =
         userType === "rejectTeacher" ? "localAdmins" : "globalAdmins";
       const status = await api.post(
-        `/${admin}/${userType}/${user._id}`,
+        `/${admin}/${userTypeInt}/${user._id}`,
         { token: data.token, id: data._id }
       );
       refreshUsers();
@@ -65,15 +64,16 @@ const Modal = ({ isOpen, onClose, user, type, refreshUsers }) => {
           </h3>
           <div className="mt-2 px-7 py-3">
             <p className="text-sm text-gray-500">Email: {user.emailId}</p>
-            <p className="text-sm text-gray-500">
-              {(user.institution)  && `Institution: ${(type === "org" || type === "teachers") && user.institution}`}
-            </p>
+            {(userType === "org" || userType === "teachers") && <p className="text-sm text-gray-500">
+              {`Institution: ${user.institution}`}
+            </p>}
+            
             {(user.qualification) && <p className="text-sm text-gray-500">
               Qualification : {user.qualification}
             </p>
             }
 
-            {(type==="mentors") && <p className="text-sm text-gray-500">
+            {(userType === "mentors") && <p className="text-sm text-gray-500">
               Resume: <a href={user.resumeLink} className="underline text-blue-500 underline-offset-2">Resume Link</a>
               </p>
               }
@@ -81,18 +81,22 @@ const Modal = ({ isOpen, onClose, user, type, refreshUsers }) => {
             <p className="text-sm text-gray-500">
               VerificationStatus: {user.verificationStatus}
             </p>
-            <p className="text-sm text-gray-500">
+            {(userType === "teachers" || userType === "mentors") && <p className="text-sm text-gray-500">
               {`Subjects Expertised in ${
-                (type === "mentors" || type === "teachers") &&
+                (userType === "mentors" || userType === "teachers") &&
                 user.subjectExpertise.join(", ")
               }`}
-            </p>
+            </p> }
+            
             <p className="text-sm text-gray-500">
               phoneNumber: {user.phoneNumber}
             </p>
             <p className="text-sm text-gray-500">
               {user.designation && `Designation: ${user.designation}`}
             </p>
+            { user.address && <p className="text-sm text-gray-500">
+              {`Address: ${user.address}`}
+            </p>}
           </div>
           <div className="items-center px-4 py-3">
             {(user.verificationStatus === "pending" ||

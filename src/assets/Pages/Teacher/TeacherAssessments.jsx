@@ -7,8 +7,8 @@ import "react-toastify/dist/ReactToastify.css";
 import AllAssignmentsCard from "./AllAssignmentsCard";
 const TeacherAssessments = () => {
   const [formData, setFormData] = React.useState({ subject: "", class: "" });
-  const { name, _id, token, institution } = JSON.parse(
-    localStorage.getItem("user")
+  const { name, _id, token, institution, subjectExpertise } = JSON.parse(
+    sessionStorage.getItem("user")
   );
   const goBack = () => {
     setFormData((prevFormData) => ({
@@ -36,15 +36,7 @@ const TeacherAssessments = () => {
               <FormInput
                 label="select subject"
                 type="select"
-                options={[
-                  "Physics",
-                  "Maths",
-                  "Telugu",
-                  "Hindi",
-                  "English",
-                  "Social",
-                  "Chemistry",
-                ]}
+                options={subjectExpertise.map((sub)=> sub.slice(0, 1).toUpperCase() + sub.slice(1))}
                 id="subject"
                 required={true}
                 onChange={handleChange}

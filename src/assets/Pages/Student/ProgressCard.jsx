@@ -5,7 +5,7 @@ import Denied from "../../images/Denied.svg";
 import False from "../../images/False.svg";
 import api from '../../api';
 const ProgressCard = ({ view }) => {
-  const { _id, token, grade, school, assignments } = JSON.parse(localStorage.getItem("user"))
+  const { _id, token, grade, school, assignments } = JSON.parse(sessionStorage.getItem("user"))
   // useEffect(()=>{
 
   // },[])

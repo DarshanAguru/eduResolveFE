@@ -14,7 +14,7 @@ const MentorHome = () => {
   const [randomData, setRandomData] = useState("");
   const [randomQuote, setRandomQuote] = useState("");
   const [refresh, setRefresh] = useState(false);
-  const { _id, token } = JSON.parse(localStorage.getItem("user"));
+  const { _id, token } = JSON.parse(sessionStorage.getItem("user"));
   console.log(_id, token);
   const [messages, setMessages] = useState([]);
   useEffect(() => {

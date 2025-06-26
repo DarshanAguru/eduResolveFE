@@ -9,7 +9,7 @@ import api from '../../api';
 const MentorNavbar = () => {
   
   const navigate = useNavigate();
-  const data = JSON.parse(localStorage.getItem("user"));
+  const data = JSON.parse(sessionStorage.getItem("user"));
   const [notifCount, setNotifCount] = useState(0);
   async function getAllNotifications() {
     
@@ -51,7 +51,7 @@ const MentorNavbar = () => {
         { token: data.token }
       );
       if (status.data.message === "Logged out Successfully!") {
-        localStorage.clear();
+        sessionStorage.clear();
         console.log("logged out successfully");
         navigate("/mentorLogin");
       } else {

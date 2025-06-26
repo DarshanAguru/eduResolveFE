@@ -16,7 +16,7 @@ const TeacherHome = () => {
   const [randomQuote, setRandomQuote] = useState("");
   const [refresh, setRefresh] = useState(false);
   const { _id, token, institution } = JSON.parse(
-    localStorage.getItem("user")
+    sessionStorage.getItem("user")
   );
   const [messages, setMessages] = useState([]);
   useEffect(() => {

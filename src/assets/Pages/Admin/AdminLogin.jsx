@@ -23,7 +23,7 @@ const AdminLogin = () => {
      
       const user = await api.post("/globalAdmins/login", {...formData});
   
-      localStorage.setItem("user", JSON.stringify(user.data));
+      sessionStorage.setItem("user", JSON.stringify(user.data));
       navigate("/Admin");
     } catch (error) {
         if(error.response && error.response.status === 401) {

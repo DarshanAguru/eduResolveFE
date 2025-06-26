@@ -24,7 +24,7 @@ const OrgLogin = () => {
       // Fetch user info using the cookie (token now stored server-side)
       const user = await api.post("/localAdmins/login", {...formData});
   
-      localStorage.setItem("user", JSON.stringify(user.data));
+      sessionStorage.setItem("user", JSON.stringify(user.data));
       navigate("/organisation");
     } catch (error) {
        if(error.response && error.response.status === 401) {

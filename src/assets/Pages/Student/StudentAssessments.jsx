@@ -9,16 +9,27 @@ const StudentAssessments = () => {
     assessment: [],
   });
   const [selectedAssessment, setSelectedAssessment] = useState("");
+  const [reqSubs, setReqSubs] = useState([]);
 
   const { name, _id, token, school, grade, assignments } = JSON.parse(
-    localStorage.getItem("user")
+    sessionStorage.getItem("user")
   );
 
   useEffect(() => {
-    if (!formData.subject) return;
 
     const getAssignments = async () => {
       try {
+        const respAllAssOfClass = await api.post("/students/getAllAssignmentsForClass", {
+          grade,
+          school,
+          token,
+          id: _id
+        });
+
+        console.log(respAllAssOfClass);
+        const allReqSubjects = Array.from(new Set(respAllAssOfClass.data.map((ass)=> ass.subject)));
+        setReqSubs(allReqSubjects);
+
         const response = await api.post(
           "/students/getallassignments",
           {
@@ -93,15 +104,7 @@ const StudentAssessments = () => {
               >
                 <option value="">Select a subject</option>
                 {/* List of subjects */}
-                {[
-                  "Physics",
-                  "Maths",
-                  "Telugu",
-                  "Hindi",
-                  "English",
-                  "Social",
-                  "Chemistry",
-                ].map((subject) => (
+                {reqSubs.map((subject) => (
                   <option key={subject} value={subject}>
                     {subject}
                   </option>

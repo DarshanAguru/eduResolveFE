@@ -3,7 +3,7 @@ import { useState } from "react";
 import TeacherProfileCard from "./TeacherProfileCard";
 import AssessmentStatTable from "./AssessmentStatTable";
 const TeacherProfile = () => {
-  const data = JSON.parse(localStorage.getItem("user"));
+  const data = JSON.parse(sessionStorage.getItem("user"));
   const { _id, token } = data;
   const [refresh, setRefresh] = useState(false);
   return (

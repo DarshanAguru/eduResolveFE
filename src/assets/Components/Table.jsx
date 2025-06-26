@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import Modal from "./Modal";
 import FormInput from "./FormInput";
-const Table = ({ users, type, refreshData }) => {
+const Table = ({ users, userType, refreshData }) => {
   const [status, setStatus] = useState(users);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState({});
@@ -59,10 +59,10 @@ const Table = ({ users, type, refreshData }) => {
               Name
             </th>
             <th scope="col" className="px-6 py-3">
-              {(type === "mentors" || type === "teachers") &&
+              {(userType === "mentors" || userType === "teachers") &&
                 "Subject Expertise"}
-              {type === "org" && "Institution"}
-              {type === "students" && "Grade"}
+              {userType === "org" && "Institution"}
+              {userType === "students" && "Grade"}
             </th>
             <th scope="col" className="px-6 py-3">
               Status
@@ -91,11 +91,11 @@ const Table = ({ users, type, refreshData }) => {
                 </div>
               </th>
               <td className="px-6 py-4">
-                {type === "org" && user.institution}
-                {type === "mentors" || type === "teachers" ? 
+                {userType === "org" && user.institution}
+                {userType === "mentors" || userType === "teachers" ? 
   user.subjectExpertise && Array.isArray(user.subjectExpertise) ? user.subjectExpertise.join(", ") : "No expertise provided"
 : null}
-                {type === "students" && user.grade}
+                {userType === "students" && user.grade}
               </td>
               <td className="px-6 py-4">
                 <div className="flex items-center">
@@ -121,7 +121,7 @@ const Table = ({ users, type, refreshData }) => {
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
         user={selectedUser}
-        type={type}
+        userType={userType}
         refreshUsers={refreshData}
       />
     </div>

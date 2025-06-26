@@ -23,7 +23,7 @@ const StudentHome = () => {
   const [refresh, setRefresh] = useState(false);
   const [uploader, setUpload] = useState(false);
   const { _id, name, token, gender, school } = JSON.parse(
-    localStorage.getItem("user")
+    sessionStorage.getItem("user")
   );
   const [messages, setMessages] = useState([]);
   useEffect(() => {

@@ -3,7 +3,7 @@ import { Navigate, Outlet } from "react-router-dom";
 import PropTypes from "prop-types";
 
 const ProtectedRoute = ({ allowedRole }) => {
-  const user = JSON.parse(localStorage.getItem("user")); // change "user" key to your actual key
+  const user = JSON.parse(sessionStorage.getItem("user")); // change "user" key to your actual key
 
   if (!user) {
     return <Navigate to="/" replace />;

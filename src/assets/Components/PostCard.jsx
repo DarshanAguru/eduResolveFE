@@ -18,7 +18,7 @@ import useSenderImage from "../hooks/useSenderImage";
 
 export default function PostCard({ user, userType, refresh }) {
   const { _id, name, gender, token } = JSON.parse(
-    localStorage.getItem("user")
+    sessionStorage.getItem("user")
   );
 
   const profileImg = useSenderImage(gender, "students");

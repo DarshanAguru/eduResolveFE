@@ -5,14 +5,14 @@ const AdminNavbar = ({ user }) => {
   const navigate = useNavigate();
   async function logout() {
     if (user === "globalAdmin") {
-      const data = JSON.parse(localStorage.getItem("user"));
+      const data = JSON.parse(sessionStorage.getItem("user"));
       try {
         const status = await api.post(
           `/globalAdmins/logout/${data._id}`,
           { token: data.token }
         );
         if (status.data.message === "Logged out Successfully!") {
-          localStorage.clear();
+          sessionStorage.clear();
           console.log("logged out successfully");
           navigate("/adminLogin");
         } else {
@@ -22,14 +22,14 @@ const AdminNavbar = ({ user }) => {
         console.log(e);
       }
     } else {
-      const data = JSON.parse(localStorage.getItem("user"));
+      const data = JSON.parse(sessionStorage.getItem("user"));
       try {
         const status = await api.post(
           `/localAdmins/logout/${data._id}`,
           { token: data.token }
         );
         if (status.data.message === "Logged out Successfully!") {
-          localStorage.clear();
+          sessionStorage.clear();
           console.log("logged out successfully from organisation");
           navigate("/organisationLogin");
         } else {

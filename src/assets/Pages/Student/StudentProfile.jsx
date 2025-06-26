@@ -6,7 +6,7 @@ import PostCard from "../../Components/PostCard";
 import api from '../../api';
 
 const StudentProfile = () => {
-  const data = JSON.parse(localStorage.getItem("user"));
+  const data = JSON.parse(sessionStorage.getItem("user"));
   const [view, setView] = useState(true);
   const { token, _id } = data;
   const [messages, setMessages] = useState([]);

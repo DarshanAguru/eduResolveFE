@@ -5,7 +5,7 @@ const AdminHome = () => {
   const [localAdmins, setLocalAdmins] = React.useState([]);
   const [mentors, setMentors] = React.useState([]);
   const [table, setTable] = useState(true);
-  const { _id, token } = JSON.parse(localStorage.getItem("user"));
+  const { _id, token } = JSON.parse(sessionStorage.getItem("user"));
   const fetchLocalAdminsData = async () => {
     try {
       const res = await api.post(
@@ -37,6 +37,7 @@ const AdminHome = () => {
   function toggle() {
     setTable((prev) => !prev);
   }
+
   return (
     <>
       <ul className="list-none flex justify-center gap-10 mt-10 ">
@@ -60,17 +61,17 @@ const AdminHome = () => {
         </li>
       </ul>
       {table
-        ? localAdmins && (
+        ? mentors && (
             <Table
               users={mentors}
-              type="mentors"
+              userType="mentors"
               refreshData={fetchMentorsData}
             />
           )
         : localAdmins && (
             <Table
               users={localAdmins}
-              type="org"
+              userType="org"
               refreshData={fetchLocalAdminsData}
             />
           )}

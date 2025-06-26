@@ -23,7 +23,7 @@ const TeacherLogin = () => {
      
       const user = await api.post("/teachers/login", {...formData});
       
-      localStorage.setItem("user", JSON.stringify(user.data));
+      sessionStorage.setItem("user", JSON.stringify(user.data));
       navigate("/teacher");
     } catch (error) {
       if(error.response && error.response.status === 401) {

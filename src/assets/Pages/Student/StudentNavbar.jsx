@@ -10,7 +10,7 @@ import { RiHome3Line, RiHome3Fill, RiLoginBoxLine } from "react-icons/ri";
 import api from "../../api";
 const StudentNavbar = () => {
   const navigate = useNavigate();
-  const data = JSON.parse(localStorage.getItem("user"));
+  const data = JSON.parse(sessionStorage.getItem("user"));
   const [notifCount, setNotifCount] = useState(0);
   const mobileMenuRef = useRef();
   const popoverRef = useRef();
@@ -72,7 +72,7 @@ const StudentNavbar = () => {
     try {
       const status = await api.post(`/students/logout/${data._id}`,{token: data.token});
       if (status.data.message === "Logged out Successfully!") {
-        localStorage.clear();
+        sessionStorage.clear();
         navigate("/studentLogin");
       } else {
         // console.log(status.data.message);

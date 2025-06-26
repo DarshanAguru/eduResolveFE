@@ -4,7 +4,7 @@ import api from "../../api";
 import ViewQuestions from "./ViewQuestions";
 const AssessmentStatTable = ({ view, setView }) => {
   const { _id, grade, school, token, assignments } = JSON.parse(
-    localStorage.getItem("user")
+    sessionStorage.getItem("user")
   );
   const [assignmentId, setAssignmentId] = useState("");
   const [questions, setQuestions] = useState({});

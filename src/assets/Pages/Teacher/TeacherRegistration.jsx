@@ -42,7 +42,19 @@ const formFields = [
   {
     label: "Qualification",
     id: "qualification",
-    placeholder: "Enter qualification",
+    type: "select",
+    options: [
+      "B.Ed",
+      "M.Ed",
+      "B.Sc",
+      "M.Sc",
+      "B.A",
+      "M.A",
+      "B.Com",
+      "M.Com",
+      "Ph.D",
+      "Other"
+    ],
     required: true,
   },
   {
@@ -67,9 +79,19 @@ const formFields = [
     minLength: 8,
     title: "Password must be at least 8 characters long",
   },
+  {
+    label: "Confirm Password",
+    id: "confirmPassword",
+    placeholder: "Confirm password",
+    type: "password",
+    required: true,
+    minLength: 8,
+    title: "Password must be at least 8 characters long",
+  }
 ];
 const TeacherRegistration = () => {
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const [institutions, setInstitutions] = useState([]);
   React.useEffect(() => {
     async function fetchSchools() {
@@ -88,9 +110,27 @@ const TeacherRegistration = () => {
     institution: "",
     phoneNumber: "",
     password: "",
+    confirmPassword: ""
   });
   const [isSubjectExpertiseValid, setIsSubjectExpertiseValid] = useState(true);
   //* State to track if subject expertise validation passes
+
+  const handleConfirmPasswordChange = (e) =>{
+    const { id, value } = e.target;
+ 
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+
+    if(value !== formData.password) {
+      setError("*passwords do not match");
+    }
+    else{
+      setError("");
+    }
+  }
+
 
   const handleChange = (e) => {
     const { id, value, type, checked } = e.target;
@@ -104,6 +144,9 @@ const TeacherRegistration = () => {
         subjectExpertise: updatedSubjectExpertise,
       }));
       //* Validate checkbox group on change
+
+      
+    
       setIsSubjectExpertiseValid(updatedSubjectExpertise.length > 0);
     } else {
       //* Handle other input changes
@@ -112,11 +155,29 @@ const TeacherRegistration = () => {
         [id]: value,
       }));
     }
+    if(id === "password")
+    {
+      
+      if(value !== formData.confirmPassword)
+      {
+        setError("*passwords do not match");
+      }
+      else{
+        setError("");
+      }
+    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     // Check if at least one checkbox is checked
+
+     
+      if(formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
     if (!formData.subjectExpertise.length) {
       setIsSubjectExpertiseValid(false);
       return;
@@ -130,7 +191,7 @@ const TeacherRegistration = () => {
       }
       const res = await api.put(
         "/teachers/register",
-        { ...formData }
+        { ...formData, confirmPassword: undefined },
       );
       console.log("Form Data submitted successfully", res.data);
       navigate("/teacherLogin");
@@ -144,6 +205,7 @@ const TeacherRegistration = () => {
       <p className="text-center mt-5 font-bold font-Montserrat text-3xl">
         Teacher Signup
       </p>
+    {error && <p className="text-red-500 text-center">{error}</p>}
       <form
         onSubmit={handleSubmit}
         className="mx-10 my-2 xl:grid xl:grid-cols-2  gap-4"
@@ -153,13 +215,13 @@ const TeacherRegistration = () => {
             <div key={index} className="mt-10 xl:mt-3">
               <label
                 htmlFor={field.id}
-                className="text-2xl xl:text-xl xl:flex xl:gap-4 xl:items-center font-Montserrat cursor-pointer"
+                className="text-md font-semibold xl:flex xl:gap-4 xl:items-center font-Montserrat cursor-pointer"
               >
                 {field.label}
               </label>
               <select
                 id={field.id}
-                className="form-select border font-Montserrat border-[#D3C9C9] bg-white shadow-lg w-full mt-5 xl:py-2 py-5 px-2 text-xl xl:text-lg"
+                className="form-select border font-Montserrat border-[#D3C9C9] bg-white shadow-lg w-full mt-5 xl:py-2 py-1 px-2 text-sm xl:text-sm"
                 onChange={handleChange}
                 value={formData[field.id]}
                 required={field.required}
@@ -180,7 +242,7 @@ const TeacherRegistration = () => {
               required={!isSubjectExpertiseValid}
             />
           ) : (
-            <FormInput key={field.id} {...field} onChange={handleChange} />
+            <FormInput key={field.id} {...field} onChange={handleChange} onConfirmPasswordChange={handleConfirmPasswordChange} />
           )
         )}
 

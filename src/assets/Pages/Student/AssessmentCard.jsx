@@ -47,8 +47,7 @@ const AssessmentCard = ({ id, token, userId, name, goBack, deadline }) => {
         `/students/getAssignment/${id}`,
         { token, id: userId }
       );
-
-      setQuestions(res.data._doc.questions);
+      setQuestions(res.data.questions);
     }
     getAssignmentQuestions();
   }, []);
@@ -107,9 +106,9 @@ const AssessmentCard = ({ id, token, userId, name, goBack, deadline }) => {
       return; // Prevent form submission if validation fails
     }
 
-    let storageData = JSON.parse(localStorage.getItem("student"));
+    let storageData = JSON.parse(sessionStorage.getItem("user"));
     storageData.assignments.push(id);
-    localStorage.setItem("student", JSON.stringify(storageData));
+    sessionStorage.setItem("user", JSON.stringify(storageData));
 
     toast.success("Answers submitted successfully!");
     async function submitAnswers() {

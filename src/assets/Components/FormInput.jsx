@@ -15,8 +15,10 @@ const FormInput = ({
   is = "",
   placeholder = "",
   value,
+  onConfirmPasswordChange,
 }) => {
   const [passwordVisible, setPasswordVisible] = useState(false);
+
 
   // Function to toggle password visibility
   const togglePasswordVisibility = () => {
@@ -57,6 +59,15 @@ const FormInput = ({
             </option>
           ))}
         </select>
+      ) : (type === "textArea")?(
+        <textarea
+          id={id}
+          className={`form-textarea border font-Montserrat border-[#D3C9C9] bg-white shadow-lg w-full mt-5 xl:py-2 py-2 px-2 text-sm xl:text-sm`}
+          placeholder={placeholder}
+          onChange={onChange}
+          required={required}
+          title={title}
+        />
       ) : (
         <div className="relative">
           <input
@@ -64,7 +75,7 @@ const FormInput = ({
             id={id}
             className={`form-input border font-Montserrat border-[#D3C9C9] bg-white shadow-lg w-full mt-5 xl:py-2 py-2 px-2 text-sm xl:text-sm ${type === "password" ? "pr-10" : ""}`}
             placeholder={placeholder}
-            onChange={onChange}
+            onChange={id === "confirmPassword" ? onConfirmPasswordChange : onChange}
             required={required}
             pattern={pattern}
             title={title}

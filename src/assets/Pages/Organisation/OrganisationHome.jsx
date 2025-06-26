@@ -4,7 +4,7 @@ import api from '../../api';
 const OrganisationHome = () => {
   const [teachers, setTeachers] = React.useState([]);
   const { _id, token, institution } = JSON.parse(
-    localStorage.getItem("user")
+    sessionStorage.getItem("user")
   );
   const fetchTeachersData = async () => {
     try {
@@ -27,7 +27,7 @@ const OrganisationHome = () => {
       <p className="border-none font-Montserrat text-xl rounded mt-12 mx-auto px-5  w-full py-2 text-slate-600 text-center">
         Teachers
       </p>
-      <Table users={teachers} type="teachers" refreshData={fetchTeachersData} />
+      <Table users={teachers} userType="teachers" refreshData={fetchTeachersData} />
     </>
   );
 };

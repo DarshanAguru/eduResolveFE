@@ -92,7 +92,7 @@ const TeacherProfileCard = ({ data, userType, setRefresh }) => {
       if (response.status === 200) {
         setIsEditing(false);
 
-        localStorage.setItem(
+        sessionStorage.setItem(
           "teacher",
           JSON.stringify({ ...formData, ...JSON.parse(response.config.data) })
         );

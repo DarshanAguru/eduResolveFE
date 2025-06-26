@@ -55,6 +55,15 @@ const formFields = [
     minLength: 8,
     title: "Password must be at least 8 characters long",
   },
+  {
+    label: "Confirm Password",
+    id: "confirmPassword",
+    placeholder: "Confirm password",
+    type: "password",
+    required: true,
+    minLength: 8,
+    title: "Password must be at least 8 characters long",
+  }
 ];
 
 const StudentRegistration = () => {
@@ -68,6 +77,7 @@ const StudentRegistration = () => {
     gender: "",
     school: "",
     password: "",
+    confirmPassword: "",
   });
   React.useEffect(() => {
     async function fetchSchools() {
@@ -78,10 +88,39 @@ const StudentRegistration = () => {
   }, []);
 
   const navigate = useNavigate();
+  const [error, setError] = useState("");
   const handleChange = (event) => {
     const { id, value } = event.target;
     setFormData((prev) => ({ ...prev, [id]: value }));
+    if(id === "password")
+    {
+      
+      if(value !== formData.confirmPassword)
+      {
+        setError("*passwords do not match");
+      }
+      else{
+        setError("");
+      }
+    }
   };
+
+   const handleConfirmPasswordChange = (e) =>{
+    const { id, value } = e.target;
+ 
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+
+    if(value !== formData.password) {
+      setError("*passwords do not match");
+    }
+    else{
+      setError("");
+    }
+  }
+
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -91,9 +130,14 @@ const StudentRegistration = () => {
         return;
       }
 
+       if(formData.password !== formData.confirmPassword) {
+        alert("Passwords do not match");
+        return;
+      }
+
       await api.put(
         "/students/register",
-        {  ...formData},
+        {  ...formData, confirmPassword: undefined },
       );
       navigate("/studentLogin");
     } catch (error) {
@@ -106,6 +150,7 @@ const StudentRegistration = () => {
       <p className="text-center mt-5 font-bold font-Montserrat text-3xl">
         Student Signup
       </p>
+      {error && <p className="text-red-500 text-center">{error}</p>}
       <form
         onSubmit={handleSubmit}
         className="mx-10 my-2 xl:grid xl:grid-cols-2 gap-4"
@@ -135,7 +180,7 @@ const StudentRegistration = () => {
               </select>
             </div>
           ) : (
-            <FormInput key={field.id} {...field} onChange={handleChange} />
+            <FormInput key={field.id} {...field} onChange={handleChange} onConfirmPasswordChange={handleConfirmPasswordChange} />
           )
         )}
         <Button

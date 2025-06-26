@@ -36,7 +36,7 @@ const formFields = [
 
 const ProfileCard = ({ userType, setRefresh }) => {
   const { _id, gender, name, grade, school, age, phoneNumber, emailId, token } =
-  JSON.parse(localStorage.getItem("student"));
+  JSON.parse(sessionStorage.getItem("user"));
   const image = useSenderImage(gender, userType);
   const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({
@@ -92,7 +92,7 @@ const ProfileCard = ({ userType, setRefresh }) => {
       console.log(response);
       if (response.status === 200) {
         setIsEditing(false);
-        localStorage.setItem(
+        sessionStorage.setItem(
           "student",
           JSON.stringify({ ...formData, ...JSON.parse(response.config.data) })
         );

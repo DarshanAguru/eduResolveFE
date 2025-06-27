@@ -25,7 +25,7 @@ const OrgLogin = () => {
       const user = await api.post("/localAdmins/login", {...formData});
   
       sessionStorage.setItem("user", JSON.stringify(user.data));
-      navigate("/organisation");
+      navigate("/organization");
     } catch (error) {
        if(error.response && error.response.status === 401) {
         toast.warning("Account Status: " + error.response.data.message);

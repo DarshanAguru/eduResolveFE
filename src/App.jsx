@@ -71,8 +71,8 @@ const App = () => {
       </Route>
       </Route>
 
-      <Route element={<ProtectedRoute allowedRole="organisation" />}>
-      <Route path="organisation" element={<OrganisationLayout />}>
+      <Route element={<ProtectedRoute allowedRole="organization" />}>
+      <Route path="organization" element={<OrganisationLayout />}>
         <Route index element={<OrganisationHome />} />
       </Route>
       </Route>

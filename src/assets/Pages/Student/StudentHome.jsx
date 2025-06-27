@@ -73,6 +73,14 @@ const StudentHome = () => {
 
 
           try{
+
+            const fileSize = file.size;
+            if (fileSize > 4 * 1024 * 1024 )
+            {
+              toast.error("File size should be less than 4mb")
+              return
+            }
+
             const lastDotIndex = file.name.lastIndexOf(".");
              let fileExtension = '';
               if (lastDotIndex !== -1) {

@@ -70,8 +70,22 @@ const StudentHome = () => {
     let imageLink = undefined;
     if(file != null && showImageUpload == true)
       {
+
+
           try{
-            const formDataa = new FormData();
+            const lastDotIndex = file.name.lastIndexOf(".");
+             let fileExtension = '';
+              if (lastDotIndex !== -1) {
+                  fileExtension = file.name.substring(lastDotIndex + 1);
+              }
+
+              if(["jpeg","jpg","png"].find((fe) => fe===fileExtension ) === undefined)
+              {
+                toast.error("Only jpg, jpeg, png formats are allowed");
+                return;
+              }
+
+          const formDataa = new FormData();
           formDataa.append("filee", file)
           formDataa.append("id", _id)
           formDataa.append("token", token)
@@ -79,15 +93,18 @@ const StudentHome = () => {
           imageLink = await api.put('/messages/uploadImg', formDataa, {headers: {
           'Content-Type': 'multipart/form-data'
           }});
+
           if(imageLink)
             {
               setUpload(false)
             }
+
         }catch(err)
         {
           console.log(err)
           setUpload(false)
           toast.error("Something went wrong please try again later", {position : "top-center"})
+          return;
         }
       }
 

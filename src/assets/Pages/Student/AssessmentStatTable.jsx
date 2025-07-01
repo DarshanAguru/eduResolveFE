@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import api from "../../api";
 import ViewQuestions from "./ViewQuestions";

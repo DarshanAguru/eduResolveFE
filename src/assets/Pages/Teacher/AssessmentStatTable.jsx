@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 import  { useState, useEffect } from "react";
 import api from "../../api";
 import Submissions from "./Submissions";

@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useState, useEffect } from "react";
 import { data } from "../../data/facts";
 import { quotes } from "../../data/quotes";

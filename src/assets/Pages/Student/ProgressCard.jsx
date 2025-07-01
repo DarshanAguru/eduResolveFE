@@ -1,4 +1,5 @@
 /* eslint-disable react/prop-types */
+/* eslint-disable react-hooks/exhaustive-deps */
 import { useEffect, useState } from "react";
 import right from "../../images/Right.svg";
 import Denied from "../../images/Denied.svg";

@@ -130,8 +130,12 @@ const QuestionCard = ({
           subject,
           assignmentTitle: `${subject} Assessment by ${name}`,
           school,
-          token,
-          id,
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': id
+          }
         }
       );
       console.log(res);

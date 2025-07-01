@@ -9,7 +9,14 @@ const AllAssignmentsCard = ({ id, token }) => {
     try {
       const data = await api.post(
         `/teachers/getassignments/${id}`,
-        { token, id }
+        {},
+        {
+          headers:
+          {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': id
+          }
+        }
       );
       setAssignments(data.data);
     } catch (e) {
@@ -36,7 +43,13 @@ const AllAssignmentsCard = ({ id, token }) => {
     try {
       const res = await api.delete(
         `/teachers/deleteAssignment/${assignmentId}`,
-        { token, id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': id
+          }
+        }
       );
       if (res.status === 200) {
         toast.success(" Assessment deleted successfully", {

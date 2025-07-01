@@ -38,7 +38,13 @@ const StudentHome = () => {
       try {
         const { data } = await api.post(
           `/messages/getAllMessages`,
-          { token, id: _id }
+          {},
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'x-user-id': _id
+            }
+          }
         );
         setMessages(data.reverse());
       } catch (e) {
@@ -98,9 +104,13 @@ const StudentHome = () => {
           formDataa.append("id", _id)
           formDataa.append("token", token)
           setUpload(true)
-          imageLink = await api.put('/messages/uploadImg', formDataa, {headers: {
-          'Content-Type': 'multipart/form-data'
-          }});
+          imageLink = await api.put('/messages/uploadImg', formDataa, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${token}`,
+              'x-user-id': _id
+            }
+          });
 
           if(imageLink)
             {
@@ -117,8 +127,6 @@ const StudentHome = () => {
       }
 
     const data = {
-      token: token,
-      id: _id,
       school: school,
       messageData: formData.postText,
       gender: gender,
@@ -129,7 +137,13 @@ const StudentHome = () => {
     try{
     await api.put(
       `/messages/addMessage/${_id}@${uuidv4()}`,
-      data
+      data,
+      {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'x-user-id': _id
+        }
+      }
     );
     toast.success("Post submitted!", { position: "top-center" });
     }

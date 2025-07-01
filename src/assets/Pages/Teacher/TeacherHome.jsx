@@ -29,7 +29,13 @@ const TeacherHome = () => {
       try {
         const { data } = await api.post(
           `/messages/getmessagesbyschool`,
-          { token: token, id: _id , school: institution}
+          { school: institution },
+          {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
         );
         setMessages(data.reverse());
       } catch (e) {

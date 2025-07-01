@@ -22,8 +22,8 @@ const MentorLogin = () => {
     
       // Fetch user info using the cookie (token now stored server-side)
       const user = await api.post("/mentors/login", {...formData}, { withCredentials: true });
-  
-      sessionStorage.setItem("user", JSON.stringify(user.data));
+
+      sessionStorage.setItem("user", JSON.stringify({...user.data, token: user.headers['authorization'].split(" ")[1] }));
       navigate("/mentor");
     } catch (error) {
         if(error.response && error.response.status === 401) {

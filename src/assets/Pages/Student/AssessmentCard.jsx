@@ -45,8 +45,15 @@ const AssessmentCard = ({ id, token, userId, name, goBack, deadline }) => {
     async function getAssignmentQuestions() {
       const res = await api.post(
         `/students/getAssignment/${id}`,
-        { token, id: userId }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': userId
+          }
+        }
       );
+
       setQuestions(res.data.questions);
     }
     getAssignmentQuestions();
@@ -115,11 +122,16 @@ const AssessmentCard = ({ id, token, userId, name, goBack, deadline }) => {
       const res = await api.put(
         `/students/submitAssignment/${id}`,
         {
-          token,
-          id: userId,
           senderId: userId,
           senderName: name,
           assignmentAnswers: answers,
+        }
+        ,
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': userId
+          }
         }
       );
       setMarks(res.data.marks);

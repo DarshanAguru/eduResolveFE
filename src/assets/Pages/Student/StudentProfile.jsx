@@ -18,7 +18,13 @@ const StudentProfile = () => {
       try {
         const { data } = await api.post(
           `/messages/getAllMessages`,
-          { token: token, id: _id }
+          {},
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'x-user-id': _id
+            }
+          }
         );
 
         const filteredMessages = data

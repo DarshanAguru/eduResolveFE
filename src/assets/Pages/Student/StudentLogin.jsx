@@ -26,8 +26,7 @@ const StudentLogin = () => {
   
       // Fetch user info using the cookie (token now stored server-side)
       const user = await api.post("/students/login", {...formData}, { withCredentials: true });
-  
-      sessionStorage.setItem("user", JSON.stringify(user.data));
+      sessionStorage.setItem("user", JSON.stringify({ ...user.data, token: user.headers['authorization'].split(" ")[1] }));
       navigate("/student");
     } catch (error) {
       console.error(error);

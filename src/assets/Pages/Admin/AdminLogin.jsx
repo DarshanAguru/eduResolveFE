@@ -22,8 +22,8 @@ const AdminLogin = () => {
     try {
      
       const user = await api.post("/globalAdmins/login", {...formData});
-  
-      sessionStorage.setItem("user", JSON.stringify(user.data));
+
+      sessionStorage.setItem("user", JSON.stringify({...user.data, token: user.headers['authorization'].split(" ")[1] }));
       navigate("/Admin");
     } catch (error) {
         if(error.response && error.response.status === 401) {

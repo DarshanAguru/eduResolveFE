@@ -81,7 +81,7 @@ const StudentRegistration = () => {
   });
   React.useEffect(() => {
     async function fetchSchools() {
-      const res = await api.post("/students/getAllSchools");
+      const res = await api.get("/students/getAllSchools");
       setInstitutions(res.data);
     }
     fetchSchools();

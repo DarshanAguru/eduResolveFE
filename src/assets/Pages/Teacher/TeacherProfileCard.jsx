@@ -52,10 +52,9 @@ const TeacherProfileCard = ({ data, userType, setRefresh }) => {
   useEffect(() => {
     async function fetchSchools() {
       try {
-        const response = await api.post(
+        const response = await api.get(
           "/teachers/getAllSchools"
         );
-        console.log(response);
         setSchools(response.data.map((each) => each.institution));
       } catch (error) {
         console.error("Error fetching schools:", error);
@@ -86,9 +85,15 @@ const TeacherProfileCard = ({ data, userType, setRefresh }) => {
     try {
       const response = await api.patch(
         `/teachers/editDetails/${_id}`,
-        { ...formData, token: token, id: _id }
+        { ...formData},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
       );
-      console.log(response);
+
       if (response.status === 200) {
         setIsEditing(false);
 

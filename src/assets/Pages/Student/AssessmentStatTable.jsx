@@ -20,7 +20,13 @@ const AssessmentStatTable = ({ view, setView }) => {
     async function getAssignmentQA(assignment_id) {
       const res = await api.post(
         `/students/getAssignmentScoreAndData/${assignment_id}`,
-        { token: token, id: _id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
       );
       setQuestions(res.data);
     }
@@ -41,11 +47,16 @@ const AssessmentStatTable = ({ view, setView }) => {
       let penassigns = [];
       let misassigns = [];
       const res = await api.post("/students/getAllAssignmentsForClass", {
-        id: _id,
-        token: token,
         grade: grade,
         school: school,
-      });
+      },
+      {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
+    );
       res.data.forEach((assign) => {
         if (assignments.includes(assign.assignmentId)) {
           subassigns.push(assign);

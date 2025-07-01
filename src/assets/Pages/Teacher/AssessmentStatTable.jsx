@@ -13,7 +13,13 @@ const AssessmentStatTable = ({ id, token }) => {
       console.log(id);
       const res = await api.post(
         `/teachers/getassignments/${id}`,
-        { token, id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': id
+          }
+        }
       );
       setData(res.data);
     }
@@ -24,7 +30,13 @@ const AssessmentStatTable = ({ id, token }) => {
     async function getAllSubmissions(assignment_id) {
       const res = await api.post(
         `/teachers/getAssignmentSubmission/${assignment_id}`,
-        { token, id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': id
+          }
+        }
       );
       setSubmissions(res.data);
     }

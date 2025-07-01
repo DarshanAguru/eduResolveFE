@@ -40,7 +40,13 @@ const StudentNavbar = () => {
     try {
       const notifs = await api.post(
         `/students/getAllNotifications/${data._id}`,
-        { token: data.token, id: data._id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${data.token}`,
+            'x-user-id': data._id
+          }
+        }
       );
       setNotifCount(notifs.data.length);
     } catch (err) {
@@ -70,7 +76,15 @@ const StudentNavbar = () => {
   // const notifications = () => {};
   async function logout() {
     try {
-      const status = await api.post(`/students/logout/${data._id}`,{token: data.token});
+      const status = await api.post(`/students/logout/${data._id}`,
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${data.token}`,
+            'x-user-id': data._id
+          }
+        }
+      );
       if (status.data.message === "Logged out Successfully!") {
         sessionStorage.clear();
         navigate("/studentLogin");

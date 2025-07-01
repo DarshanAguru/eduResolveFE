@@ -95,7 +95,7 @@ const TeacherRegistration = () => {
   const [institutions, setInstitutions] = useState([]);
   React.useEffect(() => {
     async function fetchSchools() {
-      const res = await api.post("/teachers/getAllSchools");
+      const res = await api.get("/teachers/getAllSchools");
       setInstitutions(res.data);
     }
     fetchSchools();

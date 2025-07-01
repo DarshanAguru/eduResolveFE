@@ -10,7 +10,13 @@ const OrganisationHome = () => {
     try {
       const res = await api.post(
         "/localadmins/getTeachers",
-        { token: token, id: _id, school: institution }
+        { school: institution },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
       );
       setTeachers(res.data);
     } catch (error) {

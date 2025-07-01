@@ -10,7 +10,13 @@ const AdminHome = () => {
     try {
       const res = await api.post(
         "/globalAdmins/getAllLocalAdmins",
-        { token: token, id: _id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
       );
       setLocalAdmins(res.data);
     } catch (error) {
@@ -21,7 +27,13 @@ const AdminHome = () => {
     try {
       const res = await api.post(
         "/globalAdmins/getAllMentors",
-        { token: token, id: _id }
+        {},
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
       );
       setMentors(res.data);
     } catch (error) {

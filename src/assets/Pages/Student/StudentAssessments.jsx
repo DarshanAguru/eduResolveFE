@@ -22,9 +22,14 @@ const StudentAssessments = () => {
         const respAllAssOfClass = await api.post("/students/getAllAssignmentsForClass", {
           grade,
           school,
-          token,
-          id: _id
-        });
+        },
+        {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+            'x-user-id': _id
+          }
+        }
+      );
 
         console.log(respAllAssOfClass);
         const allReqSubjects = Array.from(new Set(respAllAssOfClass.data.map((ass)=> ass.subject)));
@@ -36,8 +41,12 @@ const StudentAssessments = () => {
             subject: formData.subject,
             school,
             grade,
-            token,
-            id: _id,
+          },
+          {
+            headers: {
+              'Authorization': `Bearer ${token}`,
+              'x-user-id': _id
+            }
           }
         );
         const notSubmittedAssessments = response.data.filter((assessment) => {
